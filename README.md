@@ -115,6 +115,7 @@ def video_feed():
 The code provides a RESTful API for controlling video streaming and recording. The /start_stream and /stop_stream endpoints toggle streaming by setting a global streaming variable and releasing the video_writer resource if active. Similarly, /start_recording and /stop_recording control recording by toggling a global recording variable, saving the video, and releasing resources. The /video_feed endpoint streams video frames using generate_frames() when streaming is active, returning a MIME-formatted response. These endpoints allow seamless remote control of streaming and recording through simple API calls.
 
 <br>
+
 ```html
 @app.route('/')
 def index():
@@ -171,8 +172,20 @@ def index():
         </script>
     </body>
     </html>
-    '''
 ```
 
 <br>
 This part of the code defines the homepage for the video streaming service, featuring an HTML structure combined with inline CSS for styling, as shown in Figure 4. The page is designed with a clean and centered layout using CSS flexbox to align elements vertically and horizontally. It includes a heading, a live video feed displayed via the <img> tag sourcing the /video_feed endpoint, and two buttons to control the streaming. These buttons, styled for simplicity, trigger the controlStream JavaScript function to send POST requests to the /start_stream and /stop_stream endpoints, enabling real-time control of the streaming directly from the web interface. This combination of design and functionality ensures a user-friendly and interactive experience.
+
+<br> 
+
+## Code Breakdown
+1. Flask Endpoints
+The Flask application includes endpoints for starting and stopping the video stream (`/start_stream`, `/stop_stream`), starting and stopping video recording (/start_recording, /stop_recording), and a /video_feed endpoint that delivers video frames to the client as a streaming response.
+2. GStreamer Integration
+The GStreamer pipeline captures video data from the webcam and processes it in real-time. The pipeline is configured to convert and stream video frames, ensuring compatibility with the Flask server.
+3. Dynamic Interaction
+The system allows dynamic control over the streaming process using client-side JavaScript. Clients can start or stop the stream by triggering the respective endpoints.
+
+## Takeaways
+ This project demonstrates the integration of Flask and GStreamer to build a real-time media streaming service. The implementation provides a flexible and efficient way to handle video streaming, suitable for various applications like surveillance systems, online conferencing, or media servers.
